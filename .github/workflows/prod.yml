@@ -24,7 +24,7 @@ jobs:
               run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
             
             - name: Build docker image
-              run:  docker build -it matheuspieropan/hello .
+              run:  docker build -t matheuspieropan/hello .
 
             - name: Push image docker
               run:  docker push matheuspieropan/hello
