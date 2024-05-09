@@ -2,6 +2,8 @@ name: "hello-CI"
 on:
   push:
     branches: ["main"]
+    paths: ["src/**"]
+  workflow_dispatch:
     
 jobs:
     build:
@@ -21,8 +23,18 @@ jobs:
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
   
-      - name: Build
+      - name: Clean and Package
         run: mvn clean package -DskipTests=true
   
       - name: Test
         run: mvn test
+
+      - name: Login to Docker Hub
+        uses: docker/build-push-action@v5.3.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Push Docker image to Docker Hub
+        run: docker push matheuspieropan/hello:latest
+        
