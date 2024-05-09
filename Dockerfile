@@ -1,5 +1,5 @@
 FROM openjdk:17
 
-COPY target/**.jar app.jar
+COPY target/demonstracao-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
